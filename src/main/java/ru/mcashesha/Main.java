@@ -28,6 +28,6 @@ public class Main {
 
         System.out.printf("Type: %s%n", USE_FLOAT ? "float" : "double");
         System.out.printf("N: %d%n", N);
-        System.out.printf("Sum: %.17g%n", sum);
+        System.out.printf("Sum: %.17f%n", sum);
     }
 }
