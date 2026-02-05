@@ -1,33 +1,21 @@
-## README
+# Parallelism
 
-Программа считает сумму значений `sin()` на **одном периоде** для `N = 10^7` элементов (параллельно через `IntStream.parallel()`).
+Сумма `sin()` на одном периоде для 10^7 элементов через `IntStream.parallel()`.
 
-### Выбор типа (float / double)
+## Сборка и запуск
 
-По умолчанию используется **double**.
-Чтобы включить **float**, передайте системное свойство `arrayType` при запуске:
+```bash
+mvn package -Pfloat    # или -Pdouble (по умолчанию)
+java -jar target/parallelism-1.0.jar
+```
 
-* **double (по умолчанию)**
+## Вывод
 
-  ```bash
-  mvn package
-  cd target
-  java -jar parallelism-1.0-SNAPSHOT.jar 
-  ```
+```
+double                                  float
+------                                  -----
+Size: 10000000                          Size: 10000000
+Sum:  0.00000000006500316565673752      Sum: -0.00000000035436211810764770
+```
 
-* **float**
-
-  ```bash
-  java -DarrayType=float -jar parallelism-1.0-SNAPSHOT.jar 
-  ```
-
-Type: double
-N: 10000000
-Sum: 0.00000000006500317
-
-Type: float
-N: 10000000
-Sum: -0.00000000035436212
-
-
-> Значение суммы близко к нулю;
+Сумма близка к нулю (теоретически = 0).

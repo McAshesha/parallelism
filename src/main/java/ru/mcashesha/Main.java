@@ -1,33 +1,43 @@
 package ru.mcashesha;
 
+import java.io.IOException;
+import java.util.Properties;
 import java.util.stream.IntStream;
 
 public class Main {
 
-    static final int N = 10_000_000;
+    static final int SIZE = 10_000_000;
 
-    static final boolean USE_FLOAT = System.getProperty("arrayType", "double").equalsIgnoreCase("float");
+    static final boolean USE_FLOAT;
 
-    public static void main(String[] args) {
+    static {
+        try (var is = Main.class.getResourceAsStream("/build.properties")) {
+            Properties props = new Properties();
+            props.load(is);
+            USE_FLOAT = props.getProperty("array.type", "double").equalsIgnoreCase("float");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-        double sum, step = 2.0 * Math.PI / (N -1);
+    static void main() {
 
-        if (USE_FLOAT) {
-            sum = IntStream.range(0, N)
+        System.out.printf("Type: %s%n", USE_FLOAT ? "float" : "double");
+        System.out.printf("Size: %d%n", SIZE);
+
+        double sum, step = 2.0 * Math.PI / (SIZE -1);
+
+        sum = USE_FLOAT ?
+            IntStream.range(0, SIZE)
                 .parallel()
                 .mapToDouble(i -> (float) Math.sin(step * i))
-                .sum();
-
-        } else {
-            sum = IntStream.range(0, N)
+                .sum()
+            :
+            IntStream.range(0, SIZE)
                 .parallel()
                 .mapToDouble(i -> Math.sin(step * i))
                 .sum();
-        }
 
-
-        System.out.printf("Type: %s%n", USE_FLOAT ? "float" : "double");
-        System.out.printf("N: %d%n", N);
-        System.out.printf("Sum: %.17f%n", sum);
+        System.out.printf("Sum: %.26f%n", sum);
     }
 }
