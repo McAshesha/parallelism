@@ -8,7 +8,7 @@ public class Main {
 
     static final boolean USE_FLOAT = System.getProperty("arrayType", "double").equalsIgnoreCase("float");
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
 
         double sum, step = 2.0 * Math.PI / (N -1);
 

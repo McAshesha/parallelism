@@ -10,13 +10,15 @@
 * **double (по умолчанию)**
 
   ```bash
-  java ru.mcashesha.Main
+  mvn package
+  cd target
+  java -jar parallelism-1.0-SNAPSHOT.jar 
   ```
 
 * **float**
 
   ```bash
-  java -DarrayType=float ru.mcashesha.Main
+  java -DarrayType=float -jar parallelism-1.0-SNAPSHOT.jar 
   ```
 
 > Значение суммы близко к нулю;
