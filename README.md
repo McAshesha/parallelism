@@ -21,4 +21,13 @@
   java -DarrayType=float -jar parallelism-1.0-SNAPSHOT.jar 
   ```
 
+Type: double
+N: 10000000
+Sum: 0.00000000006500317
+
+Type: float
+N: 10000000
+Sum: -0.00000000035436212
+
+
 > Значение суммы близко к нулю;
