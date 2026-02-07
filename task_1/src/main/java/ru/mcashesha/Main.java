@@ -2,6 +2,7 @@ package ru.mcashesha;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.function.IntToDoubleFunction;
 import java.util.stream.IntStream;
 
 public class Main {
@@ -21,21 +22,18 @@ public class Main {
     }
 
     static void main() {
-
         System.out.printf("Type: %s%n", USE_FLOAT ? "float" : "double");
         System.out.printf("Size: %d%n", SIZE);
 
         double sum, step = 2.0 * Math.PI / (SIZE -1);
 
-        sum = USE_FLOAT ?
-            IntStream.range(0, SIZE)
+        IntToDoubleFunction function = USE_FLOAT
+            ? i -> (float) Math.sin(step * i)
+            : i -> Math.sin(step * i);
+
+        sum = IntStream.range(0, SIZE)
                 .parallel()
-                .mapToDouble(i -> (float) Math.sin(step * i))
-                .sum()
-            :
-            IntStream.range(0, SIZE)
-                .parallel()
-                .mapToDouble(i -> Math.sin(step * i))
+                .mapToDouble(function)
                 .sum();
 
         System.out.printf("Sum: %.26f%n", sum);
